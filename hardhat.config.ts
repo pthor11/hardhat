@@ -23,10 +23,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // Go to https://hardhat.org/config/ to learn more
 
 const config: HardhatUserConfig = {
-    solidity: "0.8.4",
+    solidity: "0.8.9",
     networks: {
-        ropsten: {
-            url: process.env.ROPSTEN_URL || "",
+        testnet: {
+            url: process.env.BSC_TEST_RPC || "https://data-seed-prebsc-1-s1.binance.org:8545",
+            chainId: 97,
+            gasPrice: 20000000000,
             accounts:
                 process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
         },
@@ -36,7 +38,7 @@ const config: HardhatUserConfig = {
         currency: "USD",
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY,
+        apiKey: process.env.BSCSCAN_API_KEY,
     },
 };
 
