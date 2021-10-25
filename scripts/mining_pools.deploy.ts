@@ -4,6 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers, run } from "hardhat";
+import { PRL_TOKEN_ADDRESS, RUNE_PROXY_CONTRACT_ADDRESS } from "./config";
 
 async function main() {
     // Hardhat always runs the compile task when running scripts with its command
@@ -14,17 +15,25 @@ async function main() {
     // await hre.run('compile');
 
     // We get the contract to deploy
-    const prl_contract = { address: "0x875c975E8e2aFa863855f79c85a6054a48596Af7" }
-    const rune_proxy_contract = { address: "0x70aC089d98332ddB7cB49EEA95033c569c823eE8" }
+
+    if (!PRL_TOKEN_ADDRESS) throw new Error(`PRL_TOKEN_ADDRESS must be provided`)
+    if (!RUNE_PROXY_CONTRACT_ADDRESS) throw new Error(`RUNE_PROXY_CONTRACT_ADDRESS must be provided`)
+
+    const prl_contract = { address: PRL_TOKEN_ADDRESS }
+    const rune_proxy_contract = { address: RUNE_PROXY_CONTRACT_ADDRESS }
+
+    console.log(`Deploying ...`);
 
     const MiningPoolsContract = await ethers.getContractFactory("MiningPools");
     const miningpool_contract = await MiningPoolsContract.deploy(prl_contract.address, rune_proxy_contract.address);
 
     await miningpool_contract.deployed();
 
-    console.log("miningpool_contract deployed to:", miningpool_contract.address);
+    console.log("Deployed", miningpool_contract.address);
 
-    const run_result = await run('verify:verify', {
+    console.log(`Verifying ...`);
+
+    await run('verify:verify', {
         address: miningpool_contract.address,
         constructorArguments: [
             prl_contract.address,
@@ -32,8 +41,7 @@ async function main() {
         ]
     })
 
-    console.log(run_result);
-
+    console.log(`Verified`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
