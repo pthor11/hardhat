@@ -11,3 +11,5 @@ export const BSCSCAN_API_KEY = process.env.BSCSCAN_API_KEY
 export const PRL_TOKEN_ADDRESS = process.env.PRL_TOKEN_ADDRESS
 
 export const RUNE_PROXY_CONTRACT_ADDRESS = process.env.RUNE_PROXY_CONTRACT_ADDRESS
+
+export const RUNE_PLASTIC_ADDRESS = process.env.RUNE_PLASTIC_ADDRESS
