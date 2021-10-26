@@ -6,6 +6,7 @@
   "scripts": {
     "dep:clean": "npx hardhat clean",
     "dep:test:mining_pools": "npx hardhat run scripts/mining_pools.deploy.ts --network testnet",
+    "dep:test:runes": "npx hardhat run scripts/runes.deploy.ts --network testnet",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
